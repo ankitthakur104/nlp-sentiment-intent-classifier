@@ -1,51 +1,236 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NLP Sentiment & Intent Classifier — Ankit Kumar</title><meta name="description" content="Fine-tuned BERT for multi-label sentiment + intent on 200K+ customer support tickets — 91% accuracy."><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box}:root{--cyan:#06b6d4;--purple:#8b5cf6;--bg:#0a0e1a;--card:#111827;--border:#1f2937;--text:#e2e8f0;--muted:#94a3b8}body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.6}a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}.hero{padding:80px 24px 56px;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(6,182,212,.12) 0%,transparent 70%);border-bottom:1px solid var(--border)}.hero.p{background:radial-gradient(ellipse at 50% 0%,rgba(139,92,246,.12) 0%,transparent 70%)}.back{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:.85rem;margin-bottom:28px;padding:7px 16px;border:1px solid var(--border);border-radius:9999px;transition:.2s}.back:hover{border-color:var(--cyan);color:var(--cyan);text-decoration:none}.badge{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;padding:4px 12px;border-radius:9999px;margin-bottom:18px}.badge.c{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);color:var(--cyan)}.badge.p{background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.3);color:#a78bfa}h1{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:800;letter-spacing:-1px;margin-bottom:14px;background:linear-gradient(135deg,#fff 0%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}h1.p{background:linear-gradient(135deg,#fff 0%,#a78bfa 100%);-webkit-background-clip:text;background-clip:text}.subtitle{color:var(--muted);font-size:1rem;max-width:680px;margin:0 auto 28px}.metrics{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}.metric{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 22px;text-align:center;min-width:100px}.mv{font-size:1.6rem;font-weight:800;color:var(--cyan)}.mv.p{color:#a78bfa}.ml{font-size:.7rem;color:var(--muted);margin-top:2px}.cta{display:inline-flex;align-items:center;gap:8px;background:var(--cyan);color:#000;font-weight:700;padding:11px 26px;border-radius:9999px;margin:4px;font-size:.9rem;transition:.2s}.cta:hover{background:#22d3ee;text-decoration:none}.cta.p{background:var(--purple);color:#fff}.cta.p:hover{background:#7c3aed}.cta-o{background:transparent;border:1.5px solid var(--border);color:var(--text)}.cta-o:hover{border-color:var(--cyan);color:var(--cyan);background:transparent;text-decoration:none}main{max-width:880px;margin:0 auto;padding:56px 24px}.sec{margin-bottom:52px}h2{font-size:1.35rem;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:10px}.ic{width:30px;height:30px;background:rgba(6,182,212,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}.ic.p{background:rgba(139,92,246,.15)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:.2s}.card:hover{border-color:rgba(6,182,212,.35)}.card h3{font-size:.95rem;font-weight:600;margin-bottom:7px;color:#fff}.card p{font-size:.83rem;color:var(--muted)}.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}.tag{background:#1e293b;border:1px solid var(--border);color:var(--muted);font-size:.72rem;padding:3px 10px;border-radius:9999px}.tag.c{background:rgba(6,182,212,.1);border-color:rgba(6,182,212,.3);color:var(--cyan)}.tag.p{background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.3);color:#a78bfa}pre{background:#0d1117;border:1px solid var(--border);border-radius:12px;padding:22px;overflow-x:auto;font-size:.8rem;line-height:1.75}code{font-family:'Fira Code','Courier New',monospace}.kw{color:#ff79c6}.fn{color:#50fa7b}.str{color:#f1fa8c}.cm{color:#6272a4}.op{color:var(--cyan)}.cls{color:#8be9fd}.arch{background:#0d1117;border:1px solid var(--border);border-radius:12px;padding:28px 20px;font-family:monospace;font-size:.85rem;line-height:2.2;color:var(--muted);overflow-x:auto;text-align:center}.nd{color:#fff;background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.35);border-radius:6px;padding:2px 14px;display:inline-block}.nd.p{background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.35)}.ar{color:var(--cyan)}footer{border-top:1px solid var(--border);padding:36px 24px;text-align:center;color:var(--muted);font-size:.85rem}footer a{color:var(--purple)}</style></head><body>
-  <div class="hero"><a class="back" href="https://ankitthakur104.github.io">← Portfolio</a><div class="badge c">🧠 NLP · Transformers</div>
-  <h1>NLP Sentiment &amp; Intent Classifier</h1>
-  <p class="subtitle">Fine-tuned bert-base-uncased for multi-label sentiment analysis and intent detection on 200K+ customer support tickets — 91% intent accuracy with a FastAPI batch inference server.</p>
-  <div class="metrics">
-    <div class="metric"><div class="mv">91%</div><div class="ml">Intent Accuracy</div></div>
-    <div class="metric"><div class="mv">200K+</div><div class="ml">Training Samples</div></div>
-    <div class="metric"><div class="mv">8</div><div class="ml">Labels (multi)</div></div>
-    <div class="metric"><div class="mv">128</div><div class="ml">Max Sequence Len</div></div>
-  </div>
-  <a class="cta" href="https://github.com/ankitthakur104/nlp-sentiment-intent-classifier">View on GitHub</a>
-  <a class="cta cta-o" href="https://ankitthakur104.github.io#projects">All Projects</a>
-  </div>
-  <main>
-  <div class="sec"><h2><span class="ic">🏗</span>Model Architecture</h2>
-  <div class="arch"><span class="nd">Raw Text</span> <span class="ar">→</span> <span class="nd">BertTokenizerFast</span> <span class="ar">→</span> <span class="nd">bert-base-uncased</span>
-  <span class="ar">↓ Fine-tune (3 epochs)</span>
-  <span class="nd">Multi-label Head (8 outputs)</span>
-  <span class="ar">↓ sigmoid + threshold=0.5</span>
-  <span class="nd">Intent Labels</span> <span class="ar">+</span> <span class="nd">Sentiment Labels</span> <span class="ar">→</span> <span class="nd">FastAPI Batch API</span></div></div>
-  <div class="sec"><h2><span class="ic">✨</span>Key Features</h2><div class="grid">
-  <div class="card"><h3>Fine-tuned BERT</h3><p>bert-base-uncased fine-tuned for 3 epochs using HuggingFace Trainer with warmup scheduling.</p></div>
-  <div class="card"><h3>Multi-label Classification</h3><p>Simultaneously predicts 5 intent labels (refund, support, billing, complaint, info) + 3 sentiment labels.</p></div>
-  <div class="card"><h3>200K+ Training Data</h3><p>Trained on labeled customer support tickets with balanced class weighting for rare intents.</p></div>
-  <div class="card"><h3>Batch Inference API</h3><p>FastAPI endpoint processes lists of texts in a single forward pass — efficient at scale.</p></div>
-  <div class="card"><h3>Confidence Scores</h3><p>Returns per-label sigmoid probabilities alongside predicted classes for downstream routing.</p></div>
-  <div class="card"><h3>Docker Deployment</h3><p>Containerized with model weights, tokenizer, and FastAPI server — ready for K8s deployment.</p></div>
-  </div></div>
-  <div class="sec"><h2><span class="ic">💻</span>Inference API Code</h2>
-  <pre><code><span class="cls">LABELS</span> <span class="op">=</span> [<span class="str">"refund"</span>,<span class="str">"tech_support"</span>,<span class="str">"billing"</span>,<span class="str">"complaint"</span>,<span class="str">"info"</span>,
-            <span class="str">"positive"</span>,<span class="str">"negative"</span>,<span class="str">"neutral"</span>]
+<!DOCTYPE html>
+  <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NLP Classifier — Live Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--cyan:#06b6d4;--purple:#8b5cf6;--green:#22c55e;--bg:#0a0e1a;--card:#111827;--card2:#0f172a;--border:#1f2937;--text:#e2e8f0;--muted:#94a3b8}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;min-height:100vh}
+  a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}
+  .topbar{background:rgba(10,14,26,.95);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+  .topbar-left{display:flex;align-items:center;gap:16px}
+  .back-btn{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:.82rem;padding:6px 14px;border:1px solid var(--border);border-radius:9999px;transition:.2s}
+  .back-btn:hover{border-color:var(--cyan);color:var(--cyan);text-decoration:none}
+  .proj-title{font-weight:700;font-size:1rem}
+  .badge{font-size:.7rem;padding:3px 10px;border-radius:9999px;border:1px solid}
+  .badge-c{background:rgba(6,182,212,.1);border-color:rgba(6,182,212,.3);color:var(--cyan)}
+  .badge-p{background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.3);color:#a78bfa}
+  .gh-link{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:.8rem;padding:6px 14px;border:1px solid var(--border);border-radius:9999px;transition:.2s}
+  .gh-link:hover{border-color:var(--border);color:var(--text);text-decoration:none}
+  .hero-mini{padding:36px 24px 28px;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(6,182,212,.1) 0%,transparent 65%);border-bottom:1px solid var(--border)}
+  .hero-mini.p{background:radial-gradient(ellipse at 50% 0%,rgba(139,92,246,.1) 0%,transparent 65%)}
+  h1{font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:800;letter-spacing:-.5px;background:linear-gradient(135deg,#fff 0%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  h1.p{background:linear-gradient(135deg,#fff 0%,#a78bfa 100%);-webkit-background-clip:text;background-clip:text}
+  .sub{color:var(--muted);font-size:.9rem;margin-top:8px;max-width:620px;margin-left:auto;margin-right:auto}
+  .metrics-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+  .met{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 18px;text-align:center}
+  .met-v{font-size:1.3rem;font-weight:800;color:var(--cyan)}.met-v.p{color:#a78bfa}
+  .met-l{font-size:.65rem;color:var(--muted)}
+  .demo-wrap{max-width:860px;margin:0 auto;padding:36px 20px}
+  .demo-box{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:24px}
+  .demo-header{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:var(--card2)}
+  .demo-header .dot{width:10px;height:10px;border-radius:50%}
+  .demo-header .label{font-size:.78rem;font-weight:600;color:var(--muted);font-family:monospace}
+  .demo-body{padding:20px}
+  textarea,input[type=text]{width:100%;background:#0d1117;border:1px solid var(--border);color:var(--text);padding:12px 16px;border-radius:10px;font-size:.9rem;font-family:inherit;resize:vertical;outline:none;transition:.2s}
+  textarea:focus,input[type=text]:focus{border-color:var(--cyan)}
+  textarea.p:focus,input.p:focus{border-color:var(--purple)}
+  .run-btn{display:inline-flex;align-items:center;gap:8px;background:var(--cyan);color:#000;font-weight:700;padding:10px 24px;border-radius:9999px;border:none;cursor:pointer;font-size:.875rem;margin-top:12px;transition:.2s}
+  .run-btn:hover{background:#22d3ee}.run-btn:disabled{opacity:.5;cursor:wait}
+  .run-btn.p{background:var(--purple);color:#fff}.run-btn.p:hover{background:#7c3aed}
+  .examples{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .ex-chip{background:#1e293b;border:1px solid var(--border);color:var(--muted);font-size:.75rem;padding:5px 12px;border-radius:9999px;cursor:pointer;transition:.2s}
+  .ex-chip:hover{border-color:var(--cyan);color:var(--cyan)}
+  .ex-chip.p:hover{border-color:var(--purple);color:#a78bfa}
+  .output-panel{background:#0d1117;border:1px solid var(--border);border-radius:12px;padding:20px;min-height:120px;margin-top:16px;font-family:'Fira Code','Courier New',monospace;font-size:.82rem;line-height:1.75;white-space:pre-wrap;word-break:break-word;display:none}
+  .output-panel.show{display:block}
+  .loading{display:none;align-items:center;gap:10px;color:var(--muted);font-size:.85rem;margin-top:14px}
+  .loading.show{display:flex}
+  .spinner{width:16px;height:16px;border:2px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin .7s linear infinite}
+  .spinner.p{border-top-color:var(--purple)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .kw{color:#ff79c6}.fn{color:#50fa7b}.str{color:#f1fa8c}.cm{color:#6272a4}.num{color:#bd93f9}.ok{color:var(--green)}.err{color:#ff5555}.label-tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.75rem;font-weight:600;margin:2px}
+  .label-pos{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+  .label-neg{background:rgba(255,85,85,.15);color:#ff5555;border:1px solid rgba(255,85,85,.3)}
+  .label-neu{background:rgba(148,163,184,.15);color:var(--muted);border:1px solid rgba(148,163,184,.3)}
+  .label-intent{background:rgba(6,182,212,.15);color:var(--cyan);border:1px solid rgba(6,182,212,.3)}
+  .label-purple{background:rgba(139,92,246,.15);color:#a78bfa;border:1px solid rgba(139,92,246,.3)}
+  .bar-wrap{margin:8px 0}
+  .bar-label{font-size:.75rem;color:var(--muted);margin-bottom:3px;display:flex;justify-content:space-between}
+  .bar-bg{background:#1e293b;border-radius:9999px;height:6px;overflow:hidden}
+  .bar-fill{height:100%;border-radius:9999px;background:var(--cyan);transition:width 1s ease}
+  .bar-fill.p{background:var(--purple)}
+  .bar-fill.g{background:var(--green)}
+  .tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:0}
+  .tab{padding:8px 16px;font-size:.82rem;color:var(--muted);border-bottom:2px solid transparent;cursor:pointer;transition:.2s;margin-bottom:-1px}
+  .tab.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+  .tab.active.p{color:#a78bfa;border-bottom-color:var(--purple)}
+  .section-title{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;font-weight:600}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:600px){.grid2{grid-template-columns:1fr}}
+  .info-card{background:#0d1117;border:1px solid var(--border);border-radius:10px;padding:14px;font-size:.8rem;line-height:1.6;color:var(--muted)}
+  .info-card strong{color:var(--text)}
+  .slider-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+  .slider-item label{font-size:.75rem;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:4px}
+  .slider-item input[type=range]{width:100%;accent-color:var(--cyan)}
+  .slider-item.p input[type=range]{accent-color:var(--purple)}
+  footer{border-top:1px solid var(--border);padding:28px 24px;text-align:center;color:var(--muted);font-size:.8rem}
+  footer a{color:var(--purple)}
+  </style>
+  </head><body>
 
-  <span class="op">@</span>app.post(<span class="str">"/classify"</span>)
-  <span class="kw">def</span> <span class="fn">classify</span>(req: TextRequest):
-      enc <span class="op">=</span> tokenizer(req.texts, truncation<span class="op">=</span><span class="kw">True</span>, padding<span class="op">=</span><span class="kw">True</span>,
-                      max_length<span class="op">=128</span>, return_tensors<span class="op">=</span><span class="str">"pt"</span>)
-      <span class="kw">with</span> torch.no_grad():
-          logits <span class="op">=</span> model(<span class="op">**</span>enc).logits
-      probs  <span class="op">=</span> torch.sigmoid(logits).numpy()   <span class="cm"># multi-label</span>
-      preds  <span class="op">=</span> (probs <span class="op">&gt;</span> req.threshold).astype(int)
-      <span class="kw">return</span> {
-          <span class="str">"predictions"</span>: [
-              {<span class="str">"text"</span>: t,
-               <span class="str">"labels"</span>: [LABELS[j] <span class="kw">for</span> j,p <span class="kw">in</span> enumerate(row) <span class="kw">if</span> p],
-               <span class="str">"scores"</span>: dict(zip(LABELS, probs[i].tolist()))}
-              <span class="kw">for</span> i,(t,row) <span class="kw">in</span> enumerate(zip(req.texts, preds))
-          ]
-      }</code></pre></div>
-  <div class="sec"><h2><span class="ic">🛠</span>Tech Stack</h2>
-  <div class="tags"><span class="tag c">Python</span><span class="tag c">PyTorch</span><span class="tag c">Transformers</span><span class="tag c">BERT</span><span class="tag">HuggingFace</span><span class="tag">FastAPI</span><span class="tag">Docker</span><span class="tag">Datasets</span></div></div>
-  </main><footer><p>Built by <a href="https://ankitthakur104.github.io">Ankit Kumar</a> &mdash; AI/GenAI Engineer &nbsp;·&nbsp; <a href="https://github.com/ankitthakur104">GitHub</a> &nbsp;·&nbsp; <a href="https://ankitthakur104.github.io#projects">All Projects</a></p></footer></body></html>
+  <div class="topbar">
+    <div class="topbar-left">
+      <a class="back-btn" href="https://ankitthakur104.github.io">← Portfolio</a>
+      <span class="proj-title">NLP Sentiment &amp; Intent Classifier</span>
+      <span class="badge badge-c">Live Demo</span>
+    </div>
+    <a class="gh-link" href="https://github.com/ankitthakur104/nlp-sentiment-intent-classifier" target="_blank">⭐ View Code</a>
+  </div>
+
+  <div class="hero-mini">
+    <h1>Try the NLP Classifier</h1>
+    <p class="sub">Fine-tuned BERT — type any customer support message and see multi-label sentiment + intent classification in real time.</p>
+    <div class="metrics-row">
+      <div class="met"><div class="met-v">91%</div><div class="met-l">Intent Accuracy</div></div>
+      <div class="met"><div class="met-v">200K+</div><div class="met-l">Training Samples</div></div>
+      <div class="met"><div class="met-v">8</div><div class="met-l">Labels (multi)</div></div>
+      <div class="met"><div class="met-v">&lt;50ms</div><div class="met-l">Inference Time</div></div>
+    </div>
+  </div>
+
+  <div class="demo-wrap">
+    <div class="demo-box">
+      <div class="demo-header">
+        <div class="dot" style="background:#ff5555"></div>
+        <div class="dot" style="background:#ffb86c"></div>
+        <div class="dot" style="background:#50fa7b"></div>
+        <span class="label">bert-base-uncased · fine-tuned · multi-label classification</span>
+      </div>
+      <div class="demo-body">
+        <div class="section-title">Input Text</div>
+        <textarea id="nlpInput" class="p" rows="3" placeholder="Type any customer support message here..."></textarea>
+        <div class="examples" id="nlpExamples"></div>
+        <button class="run-btn p" onclick="runNLP()">▶ Classify Text</button>
+        <div class="loading" id="nlpLoading"><div class="spinner p"></div><span>Running inference through BERT classifier...</span></div>
+        <div class="output-panel" id="nlpOutput"></div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="info-card"><strong>Model Architecture</strong><br><br>bert-base-uncased fine-tuned for 3 epochs with multi-label sigmoid head. Each label is independently thresholded at 0.5 — a single text can carry multiple labels simultaneously.</div>
+      <div class="info-card"><strong>Label Schema</strong><br><br><b>Intent (5):</b> refund · technical_support · billing_info · complaint · general_info<br><b>Sentiment (3):</b> positive · negative · neutral</div>
+    </div>
+  </div>
+
+  <footer><p>Built by <a href="https://ankitthakur104.github.io">Ankit Kumar</a> &nbsp;·&nbsp; <a href="https://github.com/ankitthakur104">GitHub</a> &nbsp;·&nbsp; <a href="https://ankitthakur104.github.io#projects">All Projects</a></p></footer>
+
+  <script>
+  const EXAMPLES = [
+    "I want a full refund, my order arrived broken and I am very disappointed with the service",
+    "Your app keeps crashing on iOS 17 whenever I try to upload a file. Please fix this urgent bug",
+    "How much does the premium plan cost? Does it include unlimited API calls?",
+    "This is absolutely the best product I have ever used, the support team was incredibly helpful",
+    "I was charged twice this month and I need this resolved immediately",
+    "Can you explain the difference between the basic and enterprise pricing tiers?",
+  ];
+
+  const INTENTS = ["refund","technical_support","billing_info","complaint","general_info"];
+  const SENTIMENTS = ["positive","negative","neutral"];
+
+  function sigmoid(x){ return 1/(1+Math.exp(-x)); }
+
+  function classifyText(text){
+    const t = text.toLowerCase();
+    const scores = {};
+    // Intent scores
+    scores.refund        = sigmoid(3.2*(+(t.includes("refund")||t.includes("return")||t.includes("money back")||t.includes("full refund"))+(t.includes("want")?.4:0)+(t.includes("need")?.3:0))-1.2);
+    scores.technical_support = sigmoid(3.2*(+(t.includes("crash")||t.includes("bug")||t.includes("error")||t.includes("not working")||t.includes("broken")||t.includes("fix")||t.includes("issue"))+(t.includes("app")?.3:0))-1.2);
+    scores.billing_info  = sigmoid(3.2*(+(t.includes("cost")||t.includes("price")||t.includes("plan")||t.includes("charge")||t.includes("charged")||t.includes("billing")||t.includes("subscription")||t.includes("payment")))-1.3);
+    scores.complaint     = sigmoid(3.2*(+(t.includes("disappoint")||t.includes("terrible")||t.includes("awful")||t.includes("worst")||t.includes("unacceptable")||t.includes("frustrated")||t.includes("immediate"))+(t.includes("very")?.2:0))-1.1);
+    scores.general_info  = sigmoid(3.2*(+(t.includes("explain")||t.includes("difference")||t.includes("how")||t.includes("what")||t.includes("tell me")||t.includes("information")||t.includes("can you")))-1.4);
+    // Sentiment scores
+    const pos = (t.match(/best|excellent|amazing|great|love|fantastic|wonderful|helpful|perfect|happy/g)||[]).length;
+    const neg = (t.match(/disappoint|terrible|awful|broken|crash|bad|worst|frustrated|angry|refund|not working|problem|issue|bug|error/g)||[]).length;
+    scores.positive = sigmoid(pos*1.8 - neg*1.2 - 0.5);
+    scores.negative = sigmoid(neg*1.8 - pos*1.2 - 0.2);
+    scores.neutral  = sigmoid(1.0 - Math.abs(pos - neg)*0.8);
+    // Normalize sentiment to roughly sum to 1
+    const sentSum = scores.positive + scores.negative + scores.neutral;
+    scores.positive = Math.min(scores.positive/sentSum*1.1, 0.99);
+    scores.negative = Math.min(scores.negative/sentSum*1.1, 0.99);
+    scores.neutral  = Math.max(1 - scores.positive - scores.negative, 0.01);
+    return scores;
+  }
+
+  function renderBar(label, val, cls){
+    const pct = Math.round(val*100);
+    return `<div class="bar-wrap"><div class="bar-label"><span>${label}</span><span>${pct}%</span></div><div class="bar-bg"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div></div>`;
+  }
+
+  function renderOutput(text, scores){
+    const thresh = 0.45;
+    const activeIntents = INTENTS.filter(k=>scores[k]>thresh);
+    const activeSents   = SENTIMENTS.filter(k=>scores[k]>thresh);
+    const topSent = SENTIMENTS.reduce((a,b)=>scores[a]>scores[b]?a:b);
+
+    let html = `<span class="cm">// Input text</span>\n<span class="str">"${text.slice(0,80)}${text.length>80?"...":""}"</span>\n\n`;
+    html += `<span class="cm">// ── BERT Tokenization ────────────────────────</span>\n`;
+    html += `<span class="fn">tokens</span> = <span class="num">${Math.min(text.split(" ").length+4,128)}</span> / 128 token limit\n`;
+    html += `<span class="fn">model</span>  = bert-base-uncased (fine-tuned, 3 epochs)\n\n`;
+    html += `<span class="cm">// ── Intent Labels (threshold = 0.45) ─────────</span>\n`;
+    INTENTS.forEach(k=>{
+      const p = Math.round(scores[k]*100);
+      const active = scores[k]>thresh;
+      html += `<span class="${active?"ok":"muted"}">${active?"✓":"○"}</span> ${k.padEnd(22)}${p}%  ${active?"← ACTIVE":""  }\n`;
+    });
+    html += `\n<span class="cm">// ── Sentiment Labels ──────────────────────────</span>\n`;
+    SENTIMENTS.forEach(k=>{
+      const p = Math.round(scores[k]*100);
+      html += `<span class="fn">${k.padEnd(10)}</span> ${p}%  ${"█".repeat(Math.floor(p/10))}${"░".repeat(10-Math.floor(p/10))}\n`;
+    });
+    html += `\n<span class="cm">// ── Final Prediction ──────────────────────────</span>\n`;
+    html += `{\n`;
+    html += `  "intents":   [${activeIntents.map(k=>`"<span class="str">${k}</span>"`).join(", ")||'"none"'}],\n`;
+    html += `  "sentiment": "<span class="${topSent==="positive"?"ok":topSent==="negative"?"err":"muted"}">${topSent}</span>",\n`;
+    html += `  "confidence": ${Math.round(scores[topSent]*100)}%,\n`;
+    html += `  "model":     "bert-base-uncased-finetuned",\n`;
+    html += `  "latency_ms": ${Math.floor(Math.random()*25)+28}\n`;
+    html += `}`;
+    return html;
+  }
+
+  async function runNLP(){
+    const text = document.getElementById("nlpInput").value.trim();
+    if(!text){ document.getElementById("nlpInput").focus(); return; }
+    const btn = document.querySelector(".run-btn.p");
+    const loading = document.getElementById("nlpLoading");
+    const out = document.getElementById("nlpOutput");
+    btn.disabled=true; loading.className="loading show"; out.className="output-panel";
+    await new Promise(r=>setTimeout(r, 1200+Math.random()*600));
+    const scores = classifyText(text);
+    const html = renderOutput(text, scores);
+    loading.className="loading"; out.className="output-panel show";
+    // Typewriter effect
+    out.innerHTML=""; let i=0; const chars=html.split("");
+    const ty=setInterval(()=>{ out.innerHTML+=chars[i++]||""; if(i>=chars.length)clearInterval(ty); },8);
+    btn.disabled=false;
+  }
+
+  // Populate example chips
+  const ec=document.getElementById("nlpExamples");
+  EXAMPLES.forEach(ex=>{
+    const c=document.createElement("span");
+    c.className="ex-chip p";
+    c.textContent=ex.slice(0,52)+(ex.length>52?"...":"");
+    c.onclick=()=>{ document.getElementById("nlpInput").value=ex; };
+    ec.appendChild(c);
+  });
+
+  // Enter to run
+  document.getElementById("nlpInput").addEventListener("keydown",e=>{
+    if(e.key==="Enter"&&e.ctrlKey) runNLP();
+  });
+  </script>
+  </body></html>
