@@ -1,20 +1,39 @@
 # NLP Sentiment & Intent Classifier
 
-Fine-tuned BERT for multi-label sentiment analysis and intent detection over customer support tickets.
+  A multi-label NLP classification system built by Ankit Kumar — AI/GenAI Engineer with 3+ years of experience building production NLP and LLM systems.
 
-## Features
-- Fine-tuned bert-base-uncased on 200K+ labelled samples
-- Multi-label: sentiment (positive/negative/neutral) + intent (refund/support/info/complaint)
-- 91% intent accuracy on holdout set
-- FastAPI inference server with batch prediction
-- Dockerized for scalable deployment
+  ## Overview
+  Fine-tuned transformer pipeline for real-time sentiment analysis and multi-label intent detection across customer support, product feedback, and conversational AI use cases.
 
-## Stack
-Python · PyTorch · Transformers (HuggingFace) · FastAPI · Docker
+  ## Features
+  - Sentiment classification: Positive / Neutral / Negative with confidence scores
+  - Multi-label intent detection (up to 5 concurrent intents)
+  - Fine-tuned BERT/DistilBERT backbone
+  - FastAPI inference endpoint (<150ms p95 latency)
+  - Batch processing support
+  - Custom training pipeline with Hugging Face Trainer
 
-## Setup
-```bash
-pip install -r requirements.txt
-python train.py    # Fine-tune BERT
-uvicorn api:app --reload
-```
+  ## Architecture
+  ```
+  Input Text → Tokenizer → Transformer → [Sentiment Head | Intent Head] → Scores
+  ```
+
+  ## Tech Stack
+  Python · Transformers · PyTorch · FastAPI · Hugging Face · scikit-learn
+
+  ## Setup
+  ```bash
+  pip install -r requirements.txt
+  uvicorn main:app --reload
+  ```
+
+  ## Metrics
+  | Metric | Score |
+  |--------|-------|
+  | Sentiment F1 | 0.91 |
+  | Intent F1 (micro) | 0.87 |
+  | Inference Latency | <150ms |
+
+  ## Contact
+  **Ankit Kumar** · ankitthakur104@gmail.com · [GitHub](https://github.com/ankitthakur104)
+  
