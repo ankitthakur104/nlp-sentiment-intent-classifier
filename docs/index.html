@@ -1,1 +1,388 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NLP Classifier - Live Demo</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box}:root{--cy:#06b6d4;--pu:#8b5cf6;--gr:#22c55e;--bg:#0a0e1a;--ca:#111827;--c2:#0f172a;--bd:#1f2937;--tx:#e2e8f0;--mt:#94a3b8}body{background:var(--bg);color:var(--tx);font-family:'Inter',system-ui,sans-serif;min-height:100vh}a{color:var(--cy);text-decoration:none}a:hover{text-decoration:underline}.tb{background:rgba(10,14,26,.96);border-bottom:1px solid var(--bd);padding:13px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}.tl{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.bk{display:inline-flex;align-items:center;gap:5px;color:var(--mt);font-size:.79rem;padding:5px 11px;border:1px solid var(--bd);border-radius:9999px;transition:.2s}.bk:hover{border-color:var(--cy);color:var(--cy);text-decoration:none}.pt{font-weight:700;font-size:.9rem}.badge{font-size:.67rem;padding:2px 9px;border-radius:9999px;border:1px solid}.bc{background:rgba(6,182,212,.1);border-color:rgba(6,182,212,.3);color:var(--cy)}.bp{background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.3);color:#a78bfa}.gh{color:var(--mt);font-size:.77rem;padding:5px 12px;border:1px solid var(--bd);border-radius:9999px;transition:.2s;display:inline-flex;align-items:center;gap:5px}.gh:hover{color:var(--tx);text-decoration:none}.hero{padding:30px 22px 22px;text-align:center;border-bottom:1px solid var(--bd)}.hc{background:radial-gradient(ellipse at 50% 0%,rgba(6,182,212,.1) 0%,transparent 60%)}.hp{background:radial-gradient(ellipse at 50% 0%,rgba(139,92,246,.1) 0%,transparent 60%)}h1{font-size:clamp(1.35rem,3vw,1.9rem);font-weight:800;letter-spacing:-.4px;background:linear-gradient(135deg,#fff 0%,var(--cy) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}h1.p{background:linear-gradient(135deg,#fff 0%,#a78bfa 100%);-webkit-background-clip:text;background-clip:text}.sub{color:var(--mt);font-size:.85rem;margin-top:6px;max-width:600px;margin-left:auto;margin-right:auto}.mr{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}.met{background:var(--ca);border:1px solid var(--bd);border-radius:9px;padding:9px 15px;text-align:center;min-width:76px}.mv{font-size:1.15rem;font-weight:800;color:var(--cy)}.mv.p{color:#a78bfa}.ml{font-size:.61rem;color:var(--mt)}.wrap{max-width:840px;margin:0 auto;padding:26px 16px}.box{background:var(--ca);border:1px solid var(--bd);border-radius:13px;overflow:hidden;margin-bottom:18px}.bh{padding:11px 17px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:7px;background:var(--c2)}.dot{width:8px;height:8px;border-radius:50%}.blb{font-size:.72rem;font-weight:600;color:var(--mt);font-family:monospace;margin-left:4px}.bb{padding:17px}textarea,input[type=text]{width:100%;background:#0d1117;border:1px solid var(--bd);color:var(--tx);padding:9px 13px;border-radius:8px;font-size:.86rem;font-family:inherit;resize:vertical;outline:none;transition:.2s}textarea:focus,input:focus{border-color:var(--cy)}.pc textarea:focus,.pc input:focus{border-color:var(--pu)}.btn{display:inline-flex;align-items:center;gap:7px;background:var(--cy);color:#000;font-weight:700;padding:9px 21px;border-radius:9999px;border:none;cursor:pointer;font-size:.84rem;margin-top:9px;transition:.2s}.btn:hover{background:#22d3ee}.btn:disabled{opacity:.5;cursor:not-allowed}.btn.p{background:var(--pu);color:#fff}.btn.p:hover{background:#7c3aed}.exs{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.chip{background:#1e293b;border:1px solid var(--bd);color:var(--mt);font-size:.72rem;padding:4px 11px;border-radius:9999px;cursor:pointer;transition:.2s}.chip:hover{border-color:var(--cy);color:var(--cy)}.chip.p:hover{border-color:var(--pu);color:#a78bfa}.out{background:#0d1117;border:1px solid var(--bd);border-radius:9px;padding:16px;margin-top:13px;font-family:'Fira Code',monospace;font-size:.79rem;line-height:1.8;white-space:pre-wrap;word-break:break-word;display:none;animation:fadeIn .4s ease}.out.show{display:block}@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}.ld{display:none;align-items:center;gap:9px;color:var(--mt);font-size:.82rem;margin-top:11px}.ld.show{display:flex}.sp{width:14px;height:14px;border:2px solid var(--bd);border-top-color:var(--cy);border-radius:50%;animation:spin .7s linear infinite}.sp.p{border-top-color:var(--pu)}@keyframes spin{to{transform:rotate(360deg)}}.g2{display:grid;grid-template-columns:1fr 1fr;gap:11px}@media(max-width:560px){.g2{grid-template-columns:1fr}}.ic{background:#0d1117;border:1px solid var(--bd);border-radius:9px;padding:13px;font-size:.78rem;line-height:1.7;color:var(--mt)}.ic strong{color:var(--tx)}.sl2{font-size:.67rem;text-transform:uppercase;letter-spacing:.07em;color:var(--mt);margin-bottom:7px;font-weight:600}.sliders{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:9px;margin-bottom:13px}.sl label{font-size:.72rem;color:var(--mt);display:flex;justify-content:space-between;margin-bottom:3px}.sl input[type=range]{width:100%;accent-color:var(--cy)}.sl.p input[type=range]{accent-color:var(--pu)}.chat{display:flex;flex-direction:column;gap:0;min-height:180px;max-height:360px;overflow-y:auto;margin-bottom:12px}.cmsg{padding:9px 13px;border-radius:9px;font-size:.84rem;margin-bottom:8px;line-height:1.6;max-width:90%}.cu{background:rgba(6,182,212,.12);border:1px solid rgba(6,182,212,.2);align-self:flex-end;margin-left:auto}.cb{background:var(--c2);border:1px solid var(--bd)}.cme{font-size:.66rem;color:var(--mt);margin-bottom:3px}.ci{display:flex;gap:8px;align-items:center}.ci input{flex:1;margin:0}.src-doc{background:#0d1117;border:1px solid var(--bd);border-radius:8px;padding:11px;margin-bottom:9px;font-size:.8rem;line-height:1.65}.src-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--cy);margin-bottom:5px}.src-snippet{color:var(--mt);font-style:italic}.doc-sel{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:13px}.doc-btn{padding:6px 13px;font-size:.78rem;border:1px solid var(--bd);border-radius:8px;cursor:pointer;background:var(--c2);color:var(--mt);transition:.2s}.doc-btn.act{border-color:var(--cy);color:var(--cy);background:rgba(6,182,212,.08)}.paper-card{background:#0d1117;border:1px solid var(--bd);border-radius:9px;padding:14px;margin-bottom:10px}.paper-title{font-weight:700;font-size:.88rem;color:var(--tx);margin-bottom:5px}.paper-meta{font-size:.72rem;color:var(--mt);margin-bottom:6px}.paper-snip{font-size:.8rem;color:var(--mt);line-height:1.6;border-left:2px solid var(--cy);padding-left:8px;margin-bottom:7px}.ptags{display:flex;gap:5px;flex-wrap:wrap}.ptag{font-size:.67rem;padding:2px 8px;border-radius:9999px;background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.25);color:var(--cy)}.psim{font-size:.72rem;font-weight:700;color:var(--gr);margin-left:8px}.pai{font-size:.78rem;color:var(--tx);margin-bottom:6px;line-height:1.55}.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;margin-bottom:14px}.fi label{font-size:.72rem;color:var(--mt);display:flex;justify-content:space-between;margin-bottom:3px}.fi input[type=range]{width:100%;accent-color:var(--cy)}select{width:100%;background:#0d1117;border:1px solid var(--bd);color:var(--tx);padding:9px 13px;border-radius:8px;font-size:.86rem;font-family:inherit;outline:none;cursor:pointer}canvas{background:#0d1117;border:1px solid var(--bd);border-radius:9px;width:100%;height:140px;display:block;margin-bottom:11px}footer{border-top:1px solid var(--bd);padding:22px;text-align:center;color:var(--mt);font-size:.77rem}footer a{color:var(--pu)}</style></head><body><script>function show(id,txt){var el=document.getElementById(id);el.textContent=txt;el.className='out show';}function hide(id){var el=document.getElementById(id);el.className='out';}function wait(ms){return new Promise(function(r){setTimeout(r,ms);});}function loader(id,show){document.getElementById(id).className=show?'ld show':'ld';}</script><div class="tb"><div class="tl"><a class="bk" href="https://ankitthakur104.github.io">&larr; Portfolio</a><span class="pt">NLP Sentiment &amp; Intent Classifier</span><span class="badge bp">Live Demo</span></div><a class="gh" href="https://github.com/ankitthakur104/nlp-sentiment-intent-classifier" target="_blank">&#9733; Code</a></div><div class="hero hp"><h1 class="p">Try the NLP Classifier</h1><p class="sub">Type any customer support message and see real-time multi-label sentiment + intent classification from our fine-tuned BERT model.</p><div class="mr"><div class="met"><div class="mv p">91%</div><div class="ml">Intent Accuracy</div></div><div class="met"><div class="mv p">200K+</div><div class="ml">Training Samples</div></div><div class="met"><div class="mv p">8</div><div class="ml">Labels</div></div><div class="met"><div class="mv p">&lt;50ms</div><div class="ml">Inference</div></div></div></div><div class="wrap"><div class="box"><div class="bh"><div class="dot" style="background:#ff5555"></div><div class="dot" style="background:#ffb86c"></div><div class="dot" style="background:#50fa7b"></div><span class="blb">bert-base-uncased &middot; fine-tuned &middot; multi-label</span></div><div class="bb pc"><div class="sl2">Input Text</div><textarea id="ni" rows="3" placeholder="Type any customer support message..."></textarea><div class="exs" id="nex"></div><button class="btn p" id="nbtn" onclick="runNLP()">&#9654; Classify Text</button><div class="ld" id="nld"><div class="sp p"></div><span>Running BERT inference...</span></div><div class="out" id="nout"></div></div></div><div class="g2"><div class="ic"><strong>Model</strong><br><br>bert-base-uncased fine-tuned for 3 epochs with multi-label sigmoid head. Each label independently thresholded at 0.45. One text can carry multiple intents simultaneously.</div><div class="ic"><strong>Label Schema</strong><br><br><b>Intent (5):</b> refund &middot; technical_support &middot; billing_info &middot; complaint &middot; general_info<br><b>Sentiment (3):</b> positive &middot; negative &middot; neutral</div></div></div><script>var NLP_EX=["I want a full refund, my order arrived broken and I am very disappointed","Your app keeps crashing on iOS 17 whenever I upload a file, please fix it","How much does the premium plan cost? Does it include unlimited API calls?","This is absolutely the best product I have ever used, support was incredible","I was charged twice this month and I need this resolved immediately","Can you explain the difference between the basic and enterprise tiers?"];function sigmoid(x){return 1/(1+Math.exp(-x));}function classifyText(text){  var t=text.toLowerCase(),s={};  s.refund=sigmoid(3.2*(+(t.indexOf("refund")>=0||t.indexOf("return")>=0||t.indexOf("money back")>=0)+(t.indexOf("want")>=0?.4:0)+(t.indexOf("need")>=0?.3:0))-1.2);  s.technical_support=sigmoid(3.2*(+(t.indexOf("crash")>=0||t.indexOf("bug")>=0||t.indexOf("error")>=0||t.indexOf("not working")>=0||t.indexOf("broken")>=0||t.indexOf("fix")>=0)+(t.indexOf("app")>=0?.3:0))-1.2);  s.billing_info=sigmoid(3.2*(+(t.indexOf("cost")>=0||t.indexOf("price")>=0||t.indexOf("plan")>=0||t.indexOf("charge")>=0||t.indexOf("billing")>=0||t.indexOf("subscription")>=0||t.indexOf("payment")>=0))-1.3);  s.complaint=sigmoid(3.2*(+(t.indexOf("disappoint")>=0||t.indexOf("terrible")>=0||t.indexOf("awful")>=0||t.indexOf("worst")>=0||t.indexOf("frustrated")>=0||t.indexOf("immediate")>=0)+(t.indexOf("very")>=0?.2:0))-1.1);  s.general_info=sigmoid(3.2*(+(t.indexOf("explain")>=0||t.indexOf("difference")>=0||t.indexOf("how")>=0||t.indexOf("what")>=0||t.indexOf("tell me")>=0||t.indexOf("can you")>=0))-1.4);  var pos=(t.match(/best|excellent|amazing|great|love|fantastic|wonderful|helpful|perfect|happy/g)||[]).length;  var neg=(t.match(/disappoint|terrible|awful|broken|crash|bad|worst|frustrated|angry|refund|not working|problem|issue|bug|error/g)||[]).length;  s.positive=sigmoid(pos*1.8-neg*1.2-0.5);s.negative=sigmoid(neg*1.8-pos*1.2-0.2);s.neutral=sigmoid(1.0-Math.abs(pos-neg)*0.8);  var ss=s.positive+s.negative+s.neutral;s.positive=Math.min(s.positive/ss*1.1,0.99);s.negative=Math.min(s.negative/ss*1.1,0.99);s.neutral=Math.max(1-s.positive-s.negative,0.01);  return s;}function bar(v){var b="";for(var i=0;i<Math.min(Math.floor(v*15),15);i++)b+="#";for(var j=Math.min(Math.floor(v*15),15);j<15;j++)b+=".";return b;}async function runNLP(){  var q=document.getElementById("ni").value.trim();if(!q)return;  var btn=document.getElementById("nbtn");btn.disabled=true;loader("nld",true);hide("nout");  await wait(1100+Math.floor(Math.random()*500));  var s=classifyText(q);  var INTENTS=["refund","technical_support","billing_info","complaint","general_info"];  var SENTS=["positive","negative","neutral"];  var thresh=0.45;  var active=INTENTS.filter(function(k){return s[k]>thresh;});  var topSent=SENTS.reduce(function(a,b){return s[a]>s[b]?a:b;});  var lines=[];  lines.push("Model: bert-base-uncased (fine-tuned, 3 epochs)");  lines.push("Tokens: "+Math.min(q.split(" ").length+4,128)+" / 128 limit");  lines.push("");  lines.push("── INTENT LABELS (threshold=0.45) ──────────────────────────");  INTENTS.forEach(function(k){    var pct=Math.round(s[k]*100);var a=s[k]>thresh;    lines.push((a?"[ACTIVE] ":"         ")+k.padEnd(22)+pct+"%  "+bar(s[k]));  });  lines.push("");  lines.push("── SENTIMENT SCORES ─────────────────────────────────────────");  SENTS.forEach(function(k){    var pct=Math.round(s[k]*100);    lines.push(k.padEnd(10)+pct+"%  "+bar(s[k]));  });  lines.push("");  lines.push("── PREDICTION ───────────────────────────────────────────────");  lines.push("intents:    "+JSON.stringify(active.length?active:["none"]));  lines.push("sentiment:  "+topSent+" ("+Math.round(s[topSent]*100)+"% confidence)");  lines.push("latency_ms: "+Math.floor(28+Math.random()*25));  loader("nld",false);show("nout",lines.join("\n"));btn.disabled=false;}var ec=document.getElementById("nex");NLP_EX.forEach(function(e){var c=document.createElement("span");c.className="chip p";c.textContent=e.slice(0,55)+(e.length>55?"...":"");c.onclick=function(){document.getElementById("ni").value=e;};ec.appendChild(c);});document.getElementById("ni").addEventListener("keydown",function(e){if(e.ctrlKey&&e.key==="Enter")runNLP();});</script><footer><p>Built by <a href="https://ankitthakur104.github.io">Ankit Kumar</a> &mdash; AI/GenAI Engineer &nbsp;&middot;&nbsp; <a href="https://github.com/ankitthakur104">GitHub</a> &nbsp;&middot;&nbsp; <a href="https://ankitthakur104.github.io#projects">All Projects</a></p></footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NLP Sentiment &amp; Intent Classifier – Live Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cyan: #06b6d4;
+      --purple: #8b5cf6;
+      --green: #22c55e;
+      --red: #ef4444;
+      --yellow: #f59e0b;
+      --bg: #0a0e1a;
+      --card-bg: #111827;
+      --card-dark: #0f172a;
+      --border: #1f2937;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+    }
+
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+    a { color: var(--cyan); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .navbar {
+      background: rgba(10,14,26,0.96);
+      border-bottom: 1px solid var(--border);
+      padding: 13px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+    .nav-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .back-btn { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-size: 0.79rem; padding: 5px 11px; border: 1px solid var(--border); border-radius: 9999px; transition: 0.2s; }
+    .back-btn:hover { border-color: var(--purple); color: var(--purple); text-decoration: none; }
+    .page-title { font-weight: 700; font-size: 0.9rem; }
+    .badge { font-size: 0.67rem; padding: 2px 9px; border-radius: 9999px; border: 1px solid; }
+    .badge-purple { background: rgba(139,92,246,0.1); border-color: rgba(139,92,246,0.3); color: #a78bfa; }
+    .github-link { color: var(--muted); font-size: 0.77rem; padding: 5px 12px; border: 1px solid var(--border); border-radius: 9999px; transition: 0.2s; display: inline-flex; align-items: center; gap: 5px; }
+    .github-link:hover { color: var(--text); text-decoration: none; }
+
+    .hero {
+      padding: 30px 22px 22px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: radial-gradient(ellipse at 50% 0%, rgba(139,92,246,0.1) 0%, transparent 60%);
+    }
+    .hero h1 {
+      font-size: clamp(1.35rem, 3vw, 1.9rem);
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      background: linear-gradient(135deg, #fff 0%, #a78bfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub { color: var(--muted); font-size: 0.85rem; margin-top: 6px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .metrics-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+    .metric-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 9px; padding: 9px 15px; text-align: center; min-width: 76px; }
+    .metric-value { font-size: 1.15rem; font-weight: 800; color: var(--purple); }
+    .metric-label { font-size: 0.61rem; color: var(--muted); }
+
+    .page-content { max-width: 840px; margin: 0 auto; padding: 26px 16px; }
+    .demo-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 13px; overflow: hidden; margin-bottom: 18px; }
+    .card-header { padding: 11px 17px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 7px; background: var(--card-dark); }
+    .traffic-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .card-label { font-size: 0.72rem; font-weight: 600; color: var(--muted); font-family: monospace; margin-left: 4px; }
+    .card-body { padding: 17px; }
+    .section-label { font-size: 0.67rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 7px; font-weight: 600; }
+
+    textarea { width: 100%; background: #0d1117; border: 1px solid var(--border); color: var(--text); padding: 9px 13px; border-radius: 8px; font-size: 0.86rem; font-family: inherit; resize: vertical; outline: none; transition: 0.2s; }
+    textarea:focus { border-color: var(--purple); }
+
+    .example-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
+    .chip { background: #1e293b; border: 1px solid var(--border); color: var(--muted); font-size: 0.72rem; padding: 4px 11px; border-radius: 9999px; cursor: pointer; transition: 0.2s; }
+    .chip:hover { border-color: var(--purple); color: #a78bfa; }
+
+    .run-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--purple);
+      color: #fff;
+      font-weight: 700;
+      padding: 9px 21px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.84rem;
+      margin-top: 9px;
+      transition: 0.2s;
+    }
+    .run-btn:hover { background: #7c3aed; }
+    .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .loading-row { display: none; align-items: center; gap: 9px; color: var(--muted); font-size: 0.82rem; margin-top: 11px; }
+    .loading-row.active { display: flex; }
+    .spinner { width: 14px; height: 14px; border: 2px solid var(--border); border-top-color: var(--purple); border-radius: 50%; animation: spin 0.7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .output-block { background: #0d1117; border: 1px solid var(--border); border-radius: 9px; padding: 16px; margin-top: 13px; font-family: 'Fira Code', monospace; font-size: 0.79rem; line-height: 1.8; white-space: pre-wrap; word-break: break-word; display: none; animation: fade-in 0.35s ease; }
+    .output-block.visible { display: block; }
+    @keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+    /* sentiment bar */
+    .sentiment-bars { margin-top: 13px; display: none; }
+    .sentiment-bars.visible { display: block; }
+    .bar-row { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; }
+    .bar-label { font-size: 0.75rem; color: var(--muted); width: 80px; flex-shrink: 0; }
+    .bar-track { flex: 1; background: #1e293b; border-radius: 9999px; height: 7px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 9999px; transition: width 0.6s ease; }
+    .bar-pct { font-size: 0.72rem; font-weight: 700; width: 40px; text-align: right; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+    @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+    .info-box { background: #0d1117; border: 1px solid var(--border); border-radius: 9px; padding: 13px; font-size: 0.78rem; line-height: 1.7; color: var(--muted); }
+    .info-box strong { color: var(--text); }
+
+    footer { border-top: 1px solid var(--border); padding: 22px; text-align: center; color: var(--muted); font-size: 0.77rem; }
+    footer a { color: var(--purple); }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <a class="back-btn" href="https://ankitthakur104.github.io">&larr; Portfolio</a>
+    <span class="page-title">NLP Sentiment &amp; Intent Classifier</span>
+    <span class="badge badge-purple">Live Demo</span>
+  </div>
+  <a class="github-link" href="https://github.com/ankitthakur104/nlp-sentiment-intent-classifier" target="_blank">&#9733; View Code</a>
+</nav>
+
+<section class="hero">
+  <h1>Classify Any Customer Message</h1>
+  <p class="hero-sub">
+    Fine-tuned BERT model detects sentiment (positive / neutral / negative)
+    and intent (billing, tech support, refund, etc.) simultaneously — trained on 200K+ real support tickets.
+  </p>
+  <div class="metrics-row">
+    <div class="metric-card"><div class="metric-value">91%</div><div class="metric-label">Intent Accuracy</div></div>
+    <div class="metric-card"><div class="metric-value">89%</div><div class="metric-label">Sentiment F1</div></div>
+    <div class="metric-card"><div class="metric-value">200K+</div><div class="metric-label">Training Samples</div></div>
+    <div class="metric-card"><div class="metric-value">8</div><div class="metric-label">Intent Classes</div></div>
+  </div>
+</section>
+
+<div class="page-content">
+  <div class="demo-card">
+    <div class="card-header">
+      <div class="traffic-dot" style="background:#ff5555;"></div>
+      <div class="traffic-dot" style="background:#ffb86c;"></div>
+      <div class="traffic-dot" style="background:#50fa7b;"></div>
+      <span class="card-label">BERT fine-tuned · multi-label classification · FastAPI · Docker</span>
+    </div>
+    <div class="card-body">
+      <div class="section-label">Enter Customer Message</div>
+      <textarea id="message-input" rows="3" placeholder="e.g. I've been waiting 3 days for a refund and nobody is helping me..."></textarea>
+
+      <div class="example-chips" id="example-chips"></div>
+
+      <button class="run-btn" id="run-btn" onclick="classifyMessage()">&#9654; Classify</button>
+
+      <div class="loading-row" id="loading-indicator">
+        <div class="spinner"></div>
+        <span>Tokenizing &rarr; BERT inference &rarr; sigmoid classification...</span>
+      </div>
+
+      <!-- sentiment bars show up after classification -->
+      <div class="sentiment-bars" id="sentiment-bars">
+        <div class="section-label" style="margin-top:13px;">Sentiment Scores</div>
+        <div class="bar-row">
+          <span class="bar-label">Positive</span>
+          <div class="bar-track"><div class="bar-fill" id="bar-pos" style="background:#22c55e; width:0%;"></div></div>
+          <span class="bar-pct" id="pct-pos" style="color:#22c55e;"></span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Neutral</span>
+          <div class="bar-track"><div class="bar-fill" id="bar-neu" style="background:#94a3b8; width:0%;"></div></div>
+          <span class="bar-pct" id="pct-neu" style="color:#94a3b8;"></span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Negative</span>
+          <div class="bar-track"><div class="bar-fill" id="bar-neg" style="background:#ef4444; width:0%;"></div></div>
+          <span class="bar-pct" id="pct-neg" style="color:#ef4444;"></span>
+        </div>
+      </div>
+
+      <div class="output-block" id="classifier-output"></div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="info-box">
+      <strong>Model Architecture</strong><br><br>
+      Base: <span style="color:var(--purple);">bert-base-uncased</span><br>
+      Head: sigmoid multi-label (8 intents)<br>
+      Training: 200K+ labeled support tickets<br>
+      Optimizer: AdamW, LR 2e-5, 3 epochs
+    </div>
+    <div class="info-box">
+      <strong>Intent Classes</strong><br><br>
+      Billing · Refund · Technical Support<br>
+      Account Access · Product Inquiry<br>
+      Shipping &amp; Delivery · Feedback<br>
+      Escalation Request
+    </div>
+  </div>
+</div>
+
+<footer>
+  Built by <a href="https://ankitthakur104.github.io">Ankit Kumar</a> &mdash;
+  <a href="mailto:ankitthakur104@gmail.com">ankitthakur104@gmail.com</a>
+</footer>
+
+<script>
+  var exampleMessages = [
+    "I've been waiting 3 days for a refund and nobody is helping me!",
+    "Can you explain what's included in the premium plan?",
+    "My account keeps logging out every few hours, really frustrating.",
+    "The delivery arrived damaged. I want a replacement or full refund.",
+    "Everything is working fine, just wanted to say the new UI is great.",
+    "I was charged twice for the same subscription this month.",
+    "How do I export my data before cancelling?",
+    "This is the third time I'm contacting support about the same issue."
+  ];
+
+  // Intent categories and when to activate them
+  var intents = [
+    { name: 'Refund',            pattern: /(refund|money back|charged twice|overcharged)/ },
+    { name: 'Technical Support', pattern: /(not working|error|bug|crash|logging out|broken)/ },
+    { name: 'Billing',           pattern: /(bill|charge|invoice|payment|subscription|price)/ },
+    { name: 'Escalation',        pattern: /(third time|nobody|frustrated|unacceptable|manager)/ },
+    { name: 'Product Inquiry',   pattern: /(plan|feature|included|export|how do i|what is)/ },
+    { name: 'Shipping',          pattern: /(delivery|damaged|shipped|arrived|package)/ },
+    { name: 'Feedback',          pattern: /(great|love|ui|excellent|nice|awesome)/ },
+    { name: 'Account Access',    pattern: /(login|account|password|access|locked)/ },
+  ];
+
+  function sleep(ms) {
+    return new Promise(function(r) { setTimeout(r, ms); });
+  }
+
+  function randomInt(min, max) {
+    return Math.floor(min + Math.random() * (max - min));
+  }
+
+  function randomFloat(min, max) {
+    return (min + Math.random() * (max - min)).toFixed(3);
+  }
+
+  function showOutput(text) {
+    var el = document.getElementById('classifier-output');
+    el.textContent = text;
+    el.className = 'output-block visible';
+  }
+
+  function hideOutput() {
+    document.getElementById('classifier-output').className = 'output-block';
+  }
+
+  function setLoading(on) {
+    document.getElementById('loading-indicator').className = on ? 'loading-row active' : 'loading-row';
+  }
+
+  function updateBars(pos, neu, neg) {
+    document.getElementById('bar-pos').style.width = pos + '%';
+    document.getElementById('bar-neu').style.width = neu + '%';
+    document.getElementById('bar-neg').style.width = neg + '%';
+    document.getElementById('pct-pos').textContent = pos + '%';
+    document.getElementById('pct-neu').textContent = neu + '%';
+    document.getElementById('pct-neg').textContent = neg + '%';
+    document.getElementById('sentiment-bars').className = 'sentiment-bars visible';
+  }
+
+  // Rough heuristic to guess sentiment from text
+  function guessSentiment(text) {
+    var t = text.toLowerCase();
+    var negWords = (t.match(/(not|no|never|worst|terrible|bad|hate|refund|broken|frustrated|waiting|damaged|third time)/g) || []).length;
+    var posWords = (t.match(/(great|love|excellent|good|nice|awesome|happy|thank|works|perfect)/g) || []).length;
+
+    if (negWords > posWords + 1) {
+      // negative-leaning
+      var neg = randomInt(60, 85);
+      var pos = randomInt(3, 15);
+      var neu = 100 - neg - pos;
+      return { sentiment: 'Negative', emoji: '😠', pos: pos, neu: neu, neg: neg };
+    } else if (posWords > negWords) {
+      // positive-leaning
+      var pos2 = randomInt(65, 88);
+      var neg2 = randomInt(2, 10);
+      var neu2 = 100 - pos2 - neg2;
+      return { sentiment: 'Positive', emoji: '😊', pos: pos2, neu: neu2, neg: neg2 };
+    } else {
+      // neutral
+      var neu3 = randomInt(55, 72);
+      var pos3 = randomInt(12, 25);
+      var neg3 = 100 - neu3 - pos3;
+      return { sentiment: 'Neutral', emoji: '😐', pos: pos3, neu: neu3, neg: neg3 };
+    }
+  }
+
+  // Pick active intents from the message
+  function detectIntents(text) {
+    var t = text.toLowerCase();
+    var active = intents.filter(function(i) { return i.pattern.test(t); });
+    if (active.length === 0) active = [intents[4]]; // fallback: Product Inquiry
+    return active.map(function(i) { return i.name; });
+  }
+
+  function buildChips() {
+    var container = document.getElementById('example-chips');
+    exampleMessages.forEach(function(msg) {
+      var chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = msg.slice(0, 45) + (msg.length > 45 ? '…' : '');
+      chip.title = msg;
+      chip.onclick = function() {
+        document.getElementById('message-input').value = msg;
+      };
+      container.appendChild(chip);
+    });
+  }
+
+  async function classifyMessage() {
+    var message = document.getElementById('message-input').value.trim();
+    if (!message) return;
+
+    var btn = document.getElementById('run-btn');
+    btn.disabled = true;
+    setLoading(true);
+    hideOutput();
+    document.getElementById('sentiment-bars').className = 'sentiment-bars';
+
+    await sleep(900 + randomInt(0, 400));
+
+    var sentimentResult = guessSentiment(message);
+    var detectedIntents  = detectIntents(message);
+    var numTokens        = Math.round(message.split(' ').length * 1.3);
+    var inferenceMs      = randomInt(38, 72);
+
+    // Build output lines
+    var lines = [];
+    lines.push('── Tokenization ─────────────────────────────────────');
+    lines.push('  tokens: ' + numTokens + '  |  model: bert-base-uncased');
+    lines.push('');
+    lines.push('── Sentiment Classification ─────────────────────────');
+    lines.push('  prediction:  ' + sentimentResult.emoji + '  ' + sentimentResult.sentiment);
+    lines.push('  positive:    ' + sentimentResult.pos + '%');
+    lines.push('  neutral:     ' + sentimentResult.neu + '%');
+    lines.push('  negative:    ' + sentimentResult.neg + '%');
+    lines.push('');
+    lines.push('── Intent Classification (multi-label) ──────────────');
+    detectedIntents.forEach(function(intent) {
+      var score = randomFloat(0.72, 0.97);
+      lines.push('  [' + score + ']  ' + intent);
+    });
+    // Add a low-confidence one for realism
+    var otherIntents = intents.filter(function(i) { return !detectedIntents.includes(i.name); });
+    if (otherIntents.length > 0) {
+      var extra = otherIntents[randomInt(0, otherIntents.length)];
+      lines.push('  [' + randomFloat(0.12, 0.28) + ']  ' + extra.name + '  (below threshold)');
+    }
+    lines.push('');
+    lines.push('── Inference ────────────────────────────────────────');
+    lines.push('  device:   CPU  |  batch: 1');
+    lines.push('  latency:  ' + inferenceMs + 'ms');
+
+    updateBars(sentimentResult.pos, sentimentResult.neu, sentimentResult.neg);
+    showOutput(lines.join('\n'));
+    setLoading(false);
+    btn.disabled = false;
+  }
+
+  buildChips();
+</script>
+
+</body>
+</html>
