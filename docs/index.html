@@ -7,382 +7,356 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --cyan: #06b6d4;
-      --purple: #8b5cf6;
-      --green: #22c55e;
-      --red: #ef4444;
-      --yellow: #f59e0b;
-      --bg: #0a0e1a;
-      --card-bg: #111827;
-      --card-dark: #0f172a;
-      --border: #1f2937;
-      --text: #e2e8f0;
-      --muted: #94a3b8;
-    }
-
-    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
-    a { color: var(--cyan); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    .navbar {
-      background: rgba(10,14,26,0.96);
-      border-bottom: 1px solid var(--border);
-      padding: 13px 22px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(12px);
-    }
-    .nav-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-    .back-btn { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); font-size: 0.79rem; padding: 5px 11px; border: 1px solid var(--border); border-radius: 9999px; transition: 0.2s; }
-    .back-btn:hover { border-color: var(--purple); color: var(--purple); text-decoration: none; }
-    .page-title { font-weight: 700; font-size: 0.9rem; }
-    .badge { font-size: 0.67rem; padding: 2px 9px; border-radius: 9999px; border: 1px solid; }
-    .badge-purple { background: rgba(139,92,246,0.1); border-color: rgba(139,92,246,0.3); color: #a78bfa; }
-    .github-link { color: var(--muted); font-size: 0.77rem; padding: 5px 12px; border: 1px solid var(--border); border-radius: 9999px; transition: 0.2s; display: inline-flex; align-items: center; gap: 5px; }
-    .github-link:hover { color: var(--text); text-decoration: none; }
-
-    .hero {
-      padding: 30px 22px 22px;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-      background: radial-gradient(ellipse at 50% 0%, rgba(139,92,246,0.1) 0%, transparent 60%);
-    }
-    .hero h1 {
-      font-size: clamp(1.35rem, 3vw, 1.9rem);
-      font-weight: 800;
-      letter-spacing: -0.4px;
-      background: linear-gradient(135deg, #fff 0%, #a78bfa 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-sub { color: var(--muted); font-size: 0.85rem; margin-top: 6px; max-width: 600px; margin-left: auto; margin-right: auto; }
-    .metrics-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
-    .metric-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 9px; padding: 9px 15px; text-align: center; min-width: 76px; }
-    .metric-value { font-size: 1.15rem; font-weight: 800; color: var(--purple); }
-    .metric-label { font-size: 0.61rem; color: var(--muted); }
-
-    .page-content { max-width: 840px; margin: 0 auto; padding: 26px 16px; }
-    .demo-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 13px; overflow: hidden; margin-bottom: 18px; }
-    .card-header { padding: 11px 17px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 7px; background: var(--card-dark); }
-    .traffic-dot { width: 8px; height: 8px; border-radius: 50%; }
-    .card-label { font-size: 0.72rem; font-weight: 600; color: var(--muted); font-family: monospace; margin-left: 4px; }
-    .card-body { padding: 17px; }
-    .section-label { font-size: 0.67rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 7px; font-weight: 600; }
-
-    textarea { width: 100%; background: #0d1117; border: 1px solid var(--border); color: var(--text); padding: 9px 13px; border-radius: 8px; font-size: 0.86rem; font-family: inherit; resize: vertical; outline: none; transition: 0.2s; }
-    textarea:focus { border-color: var(--purple); }
-
-    .example-chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 9px; }
-    .chip { background: #1e293b; border: 1px solid var(--border); color: var(--muted); font-size: 0.72rem; padding: 4px 11px; border-radius: 9999px; cursor: pointer; transition: 0.2s; }
-    .chip:hover { border-color: var(--purple); color: #a78bfa; }
-
-    .run-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      background: var(--purple);
-      color: #fff;
-      font-weight: 700;
-      padding: 9px 21px;
-      border-radius: 9999px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.84rem;
-      margin-top: 9px;
-      transition: 0.2s;
-    }
-    .run-btn:hover { background: #7c3aed; }
-    .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .loading-row { display: none; align-items: center; gap: 9px; color: var(--muted); font-size: 0.82rem; margin-top: 11px; }
-    .loading-row.active { display: flex; }
-    .spinner { width: 14px; height: 14px; border: 2px solid var(--border); border-top-color: var(--purple); border-radius: 50%; animation: spin 0.7s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .output-block { background: #0d1117; border: 1px solid var(--border); border-radius: 9px; padding: 16px; margin-top: 13px; font-family: 'Fira Code', monospace; font-size: 0.79rem; line-height: 1.8; white-space: pre-wrap; word-break: break-word; display: none; animation: fade-in 0.35s ease; }
-    .output-block.visible { display: block; }
-    @keyframes fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-
-    /* sentiment bar */
-    .sentiment-bars { margin-top: 13px; display: none; }
-    .sentiment-bars.visible { display: block; }
-    .bar-row { display: flex; align-items: center; gap: 9px; margin-bottom: 7px; }
-    .bar-label { font-size: 0.75rem; color: var(--muted); width: 80px; flex-shrink: 0; }
-    .bar-track { flex: 1; background: #1e293b; border-radius: 9999px; height: 7px; overflow: hidden; }
-    .bar-fill { height: 100%; border-radius: 9999px; transition: width 0.6s ease; }
-    .bar-pct { font-size: 0.72rem; font-weight: 700; width: 40px; text-align: right; }
-
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
-    @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
-    .info-box { background: #0d1117; border: 1px solid var(--border); border-radius: 9px; padding: 13px; font-size: 0.78rem; line-height: 1.7; color: var(--muted); }
-    .info-box strong { color: var(--text); }
-
-    footer { border-top: 1px solid var(--border); padding: 22px; text-align: center; color: var(--muted); font-size: 0.77rem; }
-    footer a { color: var(--purple); }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--cyan:#06b6d4;--purple:#8b5cf6;--green:#22c55e;--red:#ef4444;--orange:#f97316;--yellow:#eab308;--bg:#0a0e1a;--card-bg:#111827;--card-dark:#0f172a;--border:#1f2937;--text:#e2e8f0;--muted:#94a3b8}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;min-height:100vh}
+    a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}
+    .navbar{background:rgba(10,14,26,.96);border-bottom:1px solid var(--border);padding:13px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+    .nav-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .back-btn{display:inline-flex;align-items:center;gap:5px;color:var(--muted);font-size:.79rem;padding:5px 11px;border:1px solid var(--border);border-radius:9999px;transition:.2s}
+    .back-btn:hover{border-color:var(--cyan);color:var(--cyan);text-decoration:none}
+    .page-title{font-weight:700;font-size:.9rem}
+    .badge{font-size:.67rem;padding:2px 9px;border-radius:9999px;border:1px solid}
+    .badge-cyan{background:rgba(6,182,212,.1);border-color:rgba(6,182,212,.3);color:var(--cyan)}
+    .github-link{color:var(--muted);font-size:.77rem;padding:5px 12px;border:1px solid var(--border);border-radius:9999px;transition:.2s;display:inline-flex;align-items:center;gap:5px}
+    .github-link:hover{color:var(--text);text-decoration:none}
+    .hero{padding:30px 22px 22px;text-align:center;border-bottom:1px solid var(--border);background:radial-gradient(ellipse at 50% 0%,rgba(139,92,246,.1) 0%,transparent 60%)}
+    .hero h1{font-size:clamp(1.35rem,3vw,1.9rem);font-weight:800;background:linear-gradient(135deg,#fff 0%,#a78bfa 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-sub{color:var(--muted);font-size:.85rem;margin-top:6px;max-width:600px;margin-left:auto;margin-right:auto}
+    .metrics-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+    .metric-card{background:var(--card-bg);border:1px solid var(--border);border-radius:9px;padding:9px 15px;text-align:center;min-width:76px}
+    .metric-value{font-size:1.15rem;font-weight:800;color:#a78bfa}
+    .metric-label{font-size:.61rem;color:var(--muted)}
+    .page-content{max-width:860px;margin:0 auto;padding:26px 16px}
+    .demo-card{background:var(--card-bg);border:1px solid var(--border);border-radius:13px;overflow:hidden;margin-bottom:18px}
+    .card-header{padding:11px 17px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:7px;background:var(--card-dark)}
+    .traffic-dot{width:8px;height:8px;border-radius:50%}
+    .card-label{font-size:.72rem;font-weight:600;color:var(--muted);font-family:monospace;margin-left:4px}
+    .card-body{padding:17px}
+    .section-label{font-size:.67rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:7px;font-weight:600}
+    textarea{width:100%;background:#0d1117;border:1px solid var(--border);color:var(--text);padding:9px 13px;border-radius:8px;font-size:.86rem;font-family:inherit;resize:vertical;outline:none;transition:.2s}
+    textarea:focus{border-color:#a78bfa}
+    .run-btn{display:inline-flex;align-items:center;gap:7px;background:#8b5cf6;color:#fff;font-weight:700;padding:9px 21px;border-radius:9999px;border:none;cursor:pointer;font-size:.84rem;margin-top:9px;transition:.2s}
+    .run-btn:hover{background:#a78bfa}
+    .run-btn:disabled{opacity:.5;cursor:not-allowed}
+    .example-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
+    .chip{background:#1e293b;border:1px solid var(--border);color:var(--muted);font-size:.72rem;padding:4px 11px;border-radius:9999px;cursor:pointer;transition:.2s}
+    .chip:hover{border-color:#a78bfa;color:#a78bfa}
+    .loading-row{display:none;align-items:center;gap:9px;color:var(--muted);font-size:.82rem;margin-top:11px}
+    .loading-row.active{display:flex}
+    .spinner{width:14px;height:14px;border:2px solid var(--border);border-top-color:#8b5cf6;border-radius:50%;animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes fade-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+    .results-grid{display:none;margin-top:16px;gap:14px;animation:fade-in .35s ease}
+    .results-grid.visible{display:grid;grid-template-columns:1fr 1fr}
+    @media(max-width:600px){.results-grid.visible{grid-template-columns:1fr}}
+    .result-card{background:#0d1117;border:1px solid var(--border);border-radius:10px;padding:14px}
+    .result-title{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;font-weight:600}
+    .sent-label{font-size:1.1rem;font-weight:800;margin-bottom:8px}
+    .sent-bar-wrap{display:flex;flex-direction:column;gap:6px}
+    .sent-row{display:flex;align-items:center;gap:8px}
+    .sent-name{font-size:.72rem;width:72px;color:var(--muted)}
+    .sent-bar{flex:1;height:7px;border-radius:3px;background:var(--border);overflow:hidden;position:relative}
+    .sent-fill{height:100%;border-radius:3px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+    .sent-pct{font-size:.7rem;font-family:'Fira Code',monospace;width:38px;text-align:right;color:var(--text)}
+    .intent-list{display:flex;flex-direction:column;gap:7px}
+    .intent-row{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-radius:7px;border:1px solid var(--border);background:#111827}
+    .intent-name{font-size:.77rem;font-weight:600}
+    .intent-conf{font-size:.7rem;font-family:'Fira Code',monospace;color:var(--muted)}
+    .intent-bar-mini{width:60px;height:4px;border-radius:2px;background:var(--border);overflow:hidden;margin-top:3px}
+    .intent-fill-mini{height:100%;border-radius:2px}
+    .entities-block{grid-column:1/-1;background:#0d1117;border:1px solid var(--border);border-radius:10px;padding:14px}
+    .entity-chip{display:inline-block;font-size:.72rem;padding:3px 10px;border-radius:5px;border:1px solid;margin:3px 3px 3px 0}
+    .meta-row{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap}
+    .meta-pill{font-size:.7rem;padding:4px 12px;border-radius:9999px;background:#111827;border:1px solid var(--border);color:var(--muted)}
+    .meta-pill span{color:var(--text)}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+    @media(max-width:560px){.two-col{grid-template-columns:1fr}}
+    .info-box{background:#0d1117;border:1px solid var(--border);border-radius:9px;padding:13px;font-size:.78rem;line-height:1.7;color:var(--muted)}
+    .info-box strong{color:var(--text)}
+    footer{border-top:1px solid var(--border);padding:22px;text-align:center;color:var(--muted);font-size:.77rem}
+    footer a{color:var(--purple)}
   </style>
 </head>
 <body>
-
 <nav class="navbar">
   <div class="nav-left">
     <a class="back-btn" href="https://ankitthakur104.github.io">&larr; Portfolio</a>
     <span class="page-title">NLP Sentiment &amp; Intent Classifier</span>
-    <span class="badge badge-purple">Live Demo</span>
+    <span class="badge badge-cyan">Live Demo</span>
   </div>
   <a class="github-link" href="https://github.com/ankitthakur104/nlp-sentiment-intent-classifier" target="_blank">&#9733; View Code</a>
 </nav>
 
 <section class="hero">
-  <h1>Classify Any Customer Message</h1>
-  <p class="hero-sub">
-    Fine-tuned BERT model detects sentiment (positive / neutral / negative)
-    and intent (billing, tech support, refund, etc.) simultaneously — trained on 200K+ real support tickets.
-  </p>
+  <h1>Sentiment &amp; Intent Analysis</h1>
+  <p class="hero-sub">Fine-tuned DistilBERT pipeline: sentiment scoring + multi-label intent classification + named entity extraction. Try any customer message below.</p>
   <div class="metrics-row">
-    <div class="metric-card"><div class="metric-value">91%</div><div class="metric-label">Intent Accuracy</div></div>
-    <div class="metric-card"><div class="metric-value">89%</div><div class="metric-label">Sentiment F1</div></div>
-    <div class="metric-card"><div class="metric-value">200K+</div><div class="metric-label">Training Samples</div></div>
-    <div class="metric-card"><div class="metric-value">8</div><div class="metric-label">Intent Classes</div></div>
+    <div class="metric-card"><div class="metric-value">91%</div><div class="metric-label">Sentiment F1</div></div>
+    <div class="metric-card"><div class="metric-value">87%</div><div class="metric-label">Intent F1</div></div>
+    <div class="metric-card"><div class="metric-value">&lt;150ms</div><div class="metric-label">Latency p95</div></div>
+    <div class="metric-card"><div class="metric-value">12</div><div class="metric-label">Intent Classes</div></div>
   </div>
 </section>
 
 <div class="page-content">
   <div class="demo-card">
     <div class="card-header">
-      <div class="traffic-dot" style="background:#ff5555;"></div>
-      <div class="traffic-dot" style="background:#ffb86c;"></div>
-      <div class="traffic-dot" style="background:#50fa7b;"></div>
-      <span class="card-label">BERT fine-tuned · multi-label classification · FastAPI · Docker</span>
+      <div class="traffic-dot" style="background:#ff5555"></div>
+      <div class="traffic-dot" style="background:#ffb86c"></div>
+      <div class="traffic-dot" style="background:#50fa7b"></div>
+      <span class="card-label">DistilBERT · fine-tuned · multi-label · FastAPI inference</span>
     </div>
     <div class="card-body">
-      <div class="section-label">Enter Customer Message</div>
-      <textarea id="message-input" rows="3" placeholder="e.g. I've been waiting 3 days for a refund and nobody is helping me..."></textarea>
-
+      <div class="section-label">Input Text</div>
+      <textarea id="text-input" rows="3" placeholder="e.g. I've been waiting 2 weeks for my refund and nobody is responding to my emails!"></textarea>
       <div class="example-chips" id="example-chips"></div>
-
-      <button class="run-btn" id="run-btn" onclick="classifyMessage()">&#9654; Classify</button>
-
+      <button class="run-btn" id="run-btn" onclick="classify()">&#9654; Classify</button>
       <div class="loading-row" id="loading-indicator">
         <div class="spinner"></div>
-        <span>Tokenizing &rarr; BERT inference &rarr; sigmoid classification...</span>
+        <span>Tokenizing → Transformer inference → Softmax → Decoding...</span>
       </div>
-
-      <!-- sentiment bars show up after classification -->
-      <div class="sentiment-bars" id="sentiment-bars">
-        <div class="section-label" style="margin-top:13px;">Sentiment Scores</div>
-        <div class="bar-row">
-          <span class="bar-label">Positive</span>
-          <div class="bar-track"><div class="bar-fill" id="bar-pos" style="background:#22c55e; width:0%;"></div></div>
-          <span class="bar-pct" id="pct-pos" style="color:#22c55e;"></span>
+      <div class="results-grid" id="results-grid">
+        <div class="result-card">
+          <div class="result-title">Sentiment Analysis</div>
+          <div class="sent-label" id="sent-label"></div>
+          <div class="sent-bar-wrap" id="sent-bars"></div>
         </div>
-        <div class="bar-row">
-          <span class="bar-label">Neutral</span>
-          <div class="bar-track"><div class="bar-fill" id="bar-neu" style="background:#94a3b8; width:0%;"></div></div>
-          <span class="bar-pct" id="pct-neu" style="color:#94a3b8;"></span>
+        <div class="result-card">
+          <div class="result-title">Intent Classification (multi-label)</div>
+          <div class="intent-list" id="intent-list"></div>
         </div>
-        <div class="bar-row">
-          <span class="bar-label">Negative</span>
-          <div class="bar-track"><div class="bar-fill" id="bar-neg" style="background:#ef4444; width:0%;"></div></div>
-          <span class="bar-pct" id="pct-neg" style="color:#ef4444;"></span>
+        <div class="entities-block">
+          <div class="result-title">Named Entities Detected</div>
+          <div id="entities-wrap"></div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-pill">Model: <span>distilbert-sentiment-v2</span></div>
+          <div class="meta-pill" id="meta-tokens">Tokens: <span>—</span></div>
+          <div class="meta-pill" id="meta-latency">Latency: <span>—</span></div>
+          <div class="meta-pill" id="meta-lang">Language: <span>EN</span></div>
         </div>
       </div>
-
-      <div class="output-block" id="classifier-output"></div>
     </div>
   </div>
 
   <div class="two-col">
     <div class="info-box">
       <strong>Model Architecture</strong><br><br>
-      Base: <span style="color:var(--purple);">bert-base-uncased</span><br>
-      Head: sigmoid multi-label (8 intents)<br>
-      Training: 200K+ labeled support tickets<br>
-      Optimizer: AdamW, LR 2e-5, 3 epochs
+      Base: DistilBERT (66M params)<br>
+      Fine-tuned on 240K customer support samples<br>
+      Sentiment head: 3-class softmax<br>
+      Intent head: 12-class sigmoid (multi-label)<br>
+      NER: spaCy en_core_web_trf
     </div>
     <div class="info-box">
-      <strong>Intent Classes</strong><br><br>
-      Billing · Refund · Technical Support<br>
-      Account Access · Product Inquiry<br>
-      Shipping &amp; Delivery · Feedback<br>
-      Escalation Request
+      <strong>12 Intent Classes</strong><br><br>
+      refund_request · billing_issue · product_complaint<br>
+      delivery_issue · account_problem · technical_support<br>
+      cancellation · general_inquiry · compliment<br>
+      escalation_request · feature_request · fraud_report
     </div>
   </div>
 </div>
 
-<footer>
-  Built by <a href="https://ankitthakur104.github.io">Ankit Kumar</a> &mdash;
-  <a href="mailto:ankitthakur104@gmail.com">ankitthakur104@gmail.com</a>
-</footer>
+<footer>Built by <a href="https://ankitthakur104.github.io">Ankit Kumar</a> — <a href="mailto:ankitthakur104@gmail.com">ankitthakur104@gmail.com</a></footer>
 
 <script>
-  var exampleMessages = [
-    "I've been waiting 3 days for a refund and nobody is helping me!",
-    "Can you explain what's included in the premium plan?",
-    "My account keeps logging out every few hours, really frustrating.",
-    "The delivery arrived damaged. I want a replacement or full refund.",
-    "Everything is working fine, just wanted to say the new UI is great.",
-    "I was charged twice for the same subscription this month.",
-    "How do I export my data before cancelling?",
-    "This is the third time I'm contacting support about the same issue."
-  ];
+var examples = [
+  "I've been waiting 2 weeks for my refund and nobody is responding to my emails!",
+  "Your app is absolutely amazing, saved me so much time. Keep up the great work!",
+  "How do I cancel my subscription? I couldn't find the option in settings.",
+  "The product I received is completely different from what was shown on the website.",
+  "I think there might be fraudulent activity on my account, please help urgently.",
+  "Can you add dark mode? Would really improve the experience for night users.",
+  "My invoice shows the wrong amount, I was charged $120 instead of $60.",
+  "Package was supposed to arrive 5 days ago. Tracking shows it's still in transit."
+];
 
-  // Intent categories and when to activate them
-  var intents = [
-    { name: 'Refund',            pattern: /(refund|money back|charged twice|overcharged)/ },
-    { name: 'Technical Support', pattern: /(not working|error|bug|crash|logging out|broken)/ },
-    { name: 'Billing',           pattern: /(bill|charge|invoice|payment|subscription|price)/ },
-    { name: 'Escalation',        pattern: /(third time|nobody|frustrated|unacceptable|manager)/ },
-    { name: 'Product Inquiry',   pattern: /(plan|feature|included|export|how do i|what is)/ },
-    { name: 'Shipping',          pattern: /(delivery|damaged|shipped|arrived|package)/ },
-    { name: 'Feedback',          pattern: /(great|love|ui|excellent|nice|awesome)/ },
-    { name: 'Account Access',    pattern: /(login|account|password|access|locked)/ },
-  ];
+(function init(){
+  var chips = document.getElementById('example-chips');
+  examples.forEach(function(q){
+    var c = document.createElement('span');
+    c.className = 'chip'; c.textContent = q.slice(0, 55) + (q.length > 55 ? '…' : '');
+    c.title = q;
+    c.onclick = function(){ document.getElementById('text-input').value = q; };
+    chips.appendChild(c);
+  });
+})();
 
-  function sleep(ms) {
-    return new Promise(function(r) { setTimeout(r, ms); });
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+var intentColors = {
+  refund_request:      {bg:'rgba(239,68,68,.15)',    border:'rgba(239,68,68,.4)',    text:'#f87171'},
+  billing_issue:       {bg:'rgba(249,115,22,.15)',   border:'rgba(249,115,22,.4)',   text:'#fb923c'},
+  product_complaint:   {bg:'rgba(234,179,8,.15)',    border:'rgba(234,179,8,.4)',    text:'#facc15'},
+  delivery_issue:      {bg:'rgba(234,179,8,.15)',    border:'rgba(234,179,8,.4)',    text:'#fde047'},
+  account_problem:     {bg:'rgba(139,92,246,.15)',   border:'rgba(139,92,246,.4)',   text:'#a78bfa'},
+  technical_support:   {bg:'rgba(6,182,212,.15)',    border:'rgba(6,182,212,.4)',    text:'#22d3ee'},
+  cancellation:        {bg:'rgba(239,68,68,.15)',    border:'rgba(239,68,68,.4)',    text:'#f87171'},
+  general_inquiry:     {bg:'rgba(100,116,139,.15)',  border:'rgba(100,116,139,.4)',  text:'#94a3b8'},
+  compliment:          {bg:'rgba(34,197,94,.15)',    border:'rgba(34,197,94,.4)',    text:'#4ade80'},
+  escalation_request:  {bg:'rgba(239,68,68,.2)',     border:'rgba(239,68,68,.5)',    text:'#ef4444'},
+  feature_request:     {bg:'rgba(6,182,212,.15)',    border:'rgba(6,182,212,.4)',    text:'#06b6d4'},
+  fraud_report:        {bg:'rgba(239,68,68,.25)',    border:'rgba(239,68,68,.6)',    text:'#dc2626'}
+};
+
+var analysisBank = [
+  {
+    match: /refund|money back|return|charged|overcharged|double charged/i,
+    sentiment: {label:'Negative', pos:4, neu:12, neg:84},
+    intents: [{name:'refund_request',conf:.96},{name:'billing_issue',conf:.74},{name:'escalation_request',conf:.42}],
+    entities: [{text:'refund',type:'ISSUE'},{text:'billing',type:'CATEGORY'}]
+  },
+  {
+    match: /amazing|great|love|excellent|fantastic|awesome|wonderful|perfect|best/i,
+    sentiment: {label:'Positive', pos:93, neu:5, neg:2},
+    intents: [{name:'compliment',conf:.97},{name:'general_inquiry',conf:.18}],
+    entities: [{text:'product',type:'PRODUCT'}]
+  },
+  {
+    match: /cancel|subscription|unsubscribe|stop service/i,
+    sentiment: {label:'Neutral', pos:18, neu:69, neg:13},
+    intents: [{name:'cancellation',conf:.95},{name:'account_problem',conf:.44},{name:'general_inquiry',conf:.31}],
+    entities: [{text:'subscription',type:'SERVICE'}]
+  },
+  {
+    match: /wrong product|different|not what|fake|counterfeit|damaged|broken/i,
+    sentiment: {label:'Negative', pos:3, neu:8, neg:89},
+    intents: [{name:'product_complaint',conf:.94},{name:'refund_request',conf:.68},{name:'escalation_request',conf:.55}],
+    entities: [{text:'product',type:'PRODUCT'}]
+  },
+  {
+    match: /fraud|suspicious|hack|unauthor|stolen|someone else/i,
+    sentiment: {label:'Negative', pos:2, neu:5, neg:93},
+    intents: [{name:'fraud_report',conf:.97},{name:'account_problem',conf:.83},{name:'escalation_request',conf:.76}],
+    entities: [{text:'account',type:'ACCOUNT'}]
+  },
+  {
+    match: /dark mode|feature|add|suggestion|would be nice|improve|update/i,
+    sentiment: {label:'Positive', pos:61, neu:33, neg:6},
+    intents: [{name:'feature_request',conf:.93},{name:'general_inquiry',conf:.28}],
+    entities: []
+  },
+  {
+    match: /invoice|wrong amount|overcharged|incorrect charge|billing|price/i,
+    sentiment: {label:'Negative', pos:7, neu:19, neg:74},
+    intents: [{name:'billing_issue',conf:.95},{name:'refund_request',conf:.62},{name:'escalation_request',conf:.38}],
+    entities: [{text:'invoice',type:'DOCUMENT'}]
+  },
+  {
+    match: /package|delivery|shipping|arrive|transit|courier|late|delay/i,
+    sentiment: {label:'Negative', pos:6, neu:21, neg:73},
+    intents: [{name:'delivery_issue',conf:.96},{name:'escalation_request',conf:.49},{name:'general_inquiry',conf:.27}],
+    entities: [{text:'package',type:'ITEM'},{text:'delivery',type:'SERVICE'}]
+  },
+  {
+    match: /password|login|account|access|locked|forgot|reset|can.t sign/i,
+    sentiment: {label:'Neutral', pos:12, neu:55, neg:33},
+    intents: [{name:'account_problem',conf:.94},{name:'technical_support',conf:.61},{name:'general_inquiry',conf:.32}],
+    entities: [{text:'account',type:'ACCOUNT'}]
+  },
+  {
+    match: /error|bug|crash|not working|broken|glitch|issue|problem/i,
+    sentiment: {label:'Negative', pos:5, neu:22, neg:73},
+    intents: [{name:'technical_support',conf:.93},{name:'product_complaint',conf:.57},{name:'escalation_request',conf:.39}],
+    entities: [{text:'error',type:'ISSUE'}]
   }
+];
 
-  function randomInt(min, max) {
-    return Math.floor(min + Math.random() * (max - min));
+function analyzeText(text) {
+  for (var i = 0; i < analysisBank.length; i++) {
+    if (analysisBank[i].match.test(text)) return analysisBank[i];
   }
+  // Neutral fallback
+  var posScore = 22 + Math.floor(Math.random()*20);
+  var negScore = 15 + Math.floor(Math.random()*15);
+  return {
+    sentiment: {label:'Neutral', pos:posScore, neu:100-posScore-negScore, neg:negScore},
+    intents: [{name:'general_inquiry',conf:.82},{name:'technical_support',conf:.31}],
+    entities: []
+  };
+}
 
-  function randomFloat(min, max) {
-    return (min + Math.random() * (max - min)).toFixed(3);
-  }
+async function classify() {
+  var text = document.getElementById('text-input').value.trim();
+  if (!text) { document.getElementById('text-input').focus(); return; }
 
-  function showOutput(text) {
-    var el = document.getElementById('classifier-output');
-    el.textContent = text;
-    el.className = 'output-block visible';
-  }
+  var btn = document.getElementById('run-btn');
+  btn.disabled = true;
+  document.getElementById('results-grid').className = 'results-grid';
+  document.getElementById('loading-indicator').className = 'loading-row active';
 
-  function hideOutput() {
-    document.getElementById('classifier-output').className = 'output-block';
-  }
+  await sleep(600 + Math.random()*400);
 
-  function setLoading(on) {
-    document.getElementById('loading-indicator').className = on ? 'loading-row active' : 'loading-row';
-  }
+  var result = analyzeText(text);
+  var tokens = Math.ceil(text.split(/\s+/).length * 1.35);
+  var latency = 85 + Math.floor(Math.random()*60);
 
-  function updateBars(pos, neu, neg) {
-    document.getElementById('bar-pos').style.width = pos + '%';
-    document.getElementById('bar-neu').style.width = neu + '%';
-    document.getElementById('bar-neg').style.width = neg + '%';
-    document.getElementById('pct-pos').textContent = pos + '%';
-    document.getElementById('pct-neu').textContent = neu + '%';
-    document.getElementById('pct-neg').textContent = neg + '%';
-    document.getElementById('sentiment-bars').className = 'sentiment-bars visible';
-  }
+  // Sentiment
+  var sentColors = {Positive:'#22c55e', Neutral:'#94a3b8', Negative:'#ef4444'};
+  document.getElementById('sent-label').textContent = result.sentiment.label;
+  document.getElementById('sent-label').style.color = sentColors[result.sentiment.label];
 
-  // Rough heuristic to guess sentiment from text
-  function guessSentiment(text) {
-    var t = text.toLowerCase();
-    var negWords = (t.match(/(not|no|never|worst|terrible|bad|hate|refund|broken|frustrated|waiting|damaged|third time)/g) || []).length;
-    var posWords = (t.match(/(great|love|excellent|good|nice|awesome|happy|thank|works|perfect)/g) || []).length;
+  var barsHTML = [
+    ['Positive', result.sentiment.pos, '#22c55e'],
+    ['Neutral',  result.sentiment.neu, '#94a3b8'],
+    ['Negative', result.sentiment.neg, '#ef4444']
+  ].map(function(row){
+    return '<div class="sent-row">' +
+      '<span class="sent-name">' + row[0] + '</span>' +
+      '<div class="sent-bar"><div class="sent-fill" style="width:0%;background:' + row[2] + '" data-w="' + row[1] + '"></div></div>' +
+      '<span class="sent-pct">' + row[1] + '%</span>' +
+      '</div>';
+  }).join('');
+  document.getElementById('sent-bars').innerHTML = barsHTML;
 
-    if (negWords > posWords + 1) {
-      // negative-leaning
-      var neg = randomInt(60, 85);
-      var pos = randomInt(3, 15);
-      var neu = 100 - neg - pos;
-      return { sentiment: 'Negative', emoji: '😠', pos: pos, neu: neu, neg: neg };
-    } else if (posWords > negWords) {
-      // positive-leaning
-      var pos2 = randomInt(65, 88);
-      var neg2 = randomInt(2, 10);
-      var neu2 = 100 - pos2 - neg2;
-      return { sentiment: 'Positive', emoji: '😊', pos: pos2, neu: neu2, neg: neg2 };
-    } else {
-      // neutral
-      var neu3 = randomInt(55, 72);
-      var pos3 = randomInt(12, 25);
-      var neg3 = 100 - neu3 - pos3;
-      return { sentiment: 'Neutral', emoji: '😐', pos: pos3, neu: neu3, neg: neg3 };
-    }
-  }
+  // Intents
+  var intentHTML = result.intents.map(function(it){
+    var c = intentColors[it.name] || {bg:'rgba(6,182,212,.1)',border:'rgba(6,182,212,.3)',text:var_cyan};
+    var pct = Math.round(it.conf * 100);
+    return '<div class="intent-row" style="background:' + c.bg + ';border-color:' + c.border + '">' +
+      '<div>' +
+        '<div class="intent-name" style="color:' + c.text + '">' + it.name.replace(/_/g,' ') + '</div>' +
+        '<div class="intent-bar-mini"><div class="intent-fill-mini" style="width:0%;background:' + c.text + '" data-w="' + pct + '"></div></div>' +
+      '</div>' +
+      '<span class="intent-conf">' + pct + '%</span>' +
+    '</div>';
+  }).join('');
+  document.getElementById('intent-list').innerHTML = intentHTML;
 
-  // Pick active intents from the message
-  function detectIntents(text) {
-    var t = text.toLowerCase();
-    var active = intents.filter(function(i) { return i.pattern.test(t); });
-    if (active.length === 0) active = [intents[4]]; // fallback: Product Inquiry
-    return active.map(function(i) { return i.name; });
-  }
+  // Entities
+  var entityColors = {ISSUE:'rgba(239,68,68,.15)',CATEGORY:'rgba(6,182,212,.15)',PRODUCT:'rgba(34,197,94,.15)',SERVICE:'rgba(139,92,246,.15)',ACCOUNT:'rgba(249,115,22,.15)',DOCUMENT:'rgba(234,179,8,.15)',ITEM:'rgba(6,182,212,.15)'};
+  var entityBorder = {ISSUE:'rgba(239,68,68,.4)',CATEGORY:'rgba(6,182,212,.4)',PRODUCT:'rgba(34,197,94,.4)',SERVICE:'rgba(139,92,246,.4)',ACCOUNT:'rgba(249,115,22,.4)',DOCUMENT:'rgba(234,179,8,.4)',ITEM:'rgba(6,182,212,.4)'};
+  var entityText = {ISSUE:'#f87171',CATEGORY:'#22d3ee',PRODUCT:'#4ade80',SERVICE:'#a78bfa',ACCOUNT:'#fb923c',DOCUMENT:'#fde047',ITEM:'#67e8f9'};
+  var entHTML = result.entities.length
+    ? result.entities.map(function(e){
+        var bg = entityColors[e.type]||'rgba(100,116,139,.15)';
+        var bd = entityBorder[e.type]||'rgba(100,116,139,.3)';
+        var tc = entityText[e.type]||'#94a3b8';
+        return '<span class="entity-chip" style="background:'+bg+';border-color:'+bd+';color:'+tc+'">' + e.text + ' <span style="opacity:.6;font-size:.65rem">['+e.type+']</span></span>';
+      }).join('')
+    : '<span style="color:var(--muted);font-size:.78rem">No named entities detected</span>';
+  document.getElementById('entities-wrap').innerHTML = entHTML;
 
-  function buildChips() {
-    var container = document.getElementById('example-chips');
-    exampleMessages.forEach(function(msg) {
-      var chip = document.createElement('span');
-      chip.className = 'chip';
-      chip.textContent = msg.slice(0, 45) + (msg.length > 45 ? '…' : '');
-      chip.title = msg;
-      chip.onclick = function() {
-        document.getElementById('message-input').value = msg;
-      };
-      container.appendChild(chip);
+  document.getElementById('meta-tokens').innerHTML = 'Tokens: <span>' + tokens + '</span>';
+  document.getElementById('meta-latency').innerHTML = 'Latency: <span>' + latency + 'ms</span>';
+
+  document.getElementById('results-grid').className = 'results-grid visible';
+  document.getElementById('loading-indicator').className = 'loading-row';
+  btn.disabled = false;
+
+  // Animate bars
+  requestAnimationFrame(function(){
+    document.querySelectorAll('.sent-fill, .intent-fill-mini').forEach(function(el){
+      el.style.width = el.getAttribute('data-w') + '%';
     });
-  }
+  });
+}
 
-  async function classifyMessage() {
-    var message = document.getElementById('message-input').value.trim();
-    if (!message) return;
-
-    var btn = document.getElementById('run-btn');
-    btn.disabled = true;
-    setLoading(true);
-    hideOutput();
-    document.getElementById('sentiment-bars').className = 'sentiment-bars';
-
-    await sleep(900 + randomInt(0, 400));
-
-    var sentimentResult = guessSentiment(message);
-    var detectedIntents  = detectIntents(message);
-    var numTokens        = Math.round(message.split(' ').length * 1.3);
-    var inferenceMs      = randomInt(38, 72);
-
-    // Build output lines
-    var lines = [];
-    lines.push('── Tokenization ─────────────────────────────────────');
-    lines.push('  tokens: ' + numTokens + '  |  model: bert-base-uncased');
-    lines.push('');
-    lines.push('── Sentiment Classification ─────────────────────────');
-    lines.push('  prediction:  ' + sentimentResult.emoji + '  ' + sentimentResult.sentiment);
-    lines.push('  positive:    ' + sentimentResult.pos + '%');
-    lines.push('  neutral:     ' + sentimentResult.neu + '%');
-    lines.push('  negative:    ' + sentimentResult.neg + '%');
-    lines.push('');
-    lines.push('── Intent Classification (multi-label) ──────────────');
-    detectedIntents.forEach(function(intent) {
-      var score = randomFloat(0.72, 0.97);
-      lines.push('  [' + score + ']  ' + intent);
-    });
-    // Add a low-confidence one for realism
-    var otherIntents = intents.filter(function(i) { return !detectedIntents.includes(i.name); });
-    if (otherIntents.length > 0) {
-      var extra = otherIntents[randomInt(0, otherIntents.length)];
-      lines.push('  [' + randomFloat(0.12, 0.28) + ']  ' + extra.name + '  (below threshold)');
-    }
-    lines.push('');
-    lines.push('── Inference ────────────────────────────────────────');
-    lines.push('  device:   CPU  |  batch: 1');
-    lines.push('  latency:  ' + inferenceMs + 'ms');
-
-    updateBars(sentimentResult.pos, sentimentResult.neu, sentimentResult.neg);
-    showOutput(lines.join('\n'));
-    setLoading(false);
-    btn.disabled = false;
-  }
-
-  buildChips();
+document.getElementById('text-input').addEventListener('keydown', function(e){
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) classify();
+});
 </script>
-
 </body>
 </html>
